@@ -1,10 +1,14 @@
-require "rest-client"
-words = RestClient.get("https://norvig.com/ngrams/enable1.txt")
+# require "rest-client"
+# words = RestClient.get("https://norvig.com/ngrams/enable1.txt")
 
-wordsArray = words.body.split("\n")
+# wordsArray = words.body.split("\n")
 
-Word.destroy_all
+# Word.destroy_all
 
-wordsArray.each do |word|
-  Word.create!(words: word)
-end
+# wordsArray.each do |word|
+#   Word.create!(words: word)
+# end
+
+l1 = ["b", "a", "k", "i", "n", "g"]
+
+g1 = Game.create!(letters: l1, difficulty: "easy")

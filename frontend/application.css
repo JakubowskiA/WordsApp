@@ -14,3 +14,16 @@ header{
     width: 40%;
     background-color: blue;
 }
+
+.container-fluid{
+    background-color: aqua;
+    text-align: center;
+}
+
+.col-7{
+    background-color: blue;
+}
+
+.col-5{
+    background-color: pink;
+}
