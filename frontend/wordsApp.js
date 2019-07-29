@@ -1,10 +1,14 @@
-const startGameBtn = document.getElementById('start-game')
-startGameBtn.addEventListener('click', startGame(event))
+const startGameBtn = document.getElementById('level-selector')
+startGameBtn.addEventListener('click', startGame)
 const letters = document.querySelector('#letters')
-// letters.innerText = "";
+
+const loginInput = document.getElementById('submit')
+loginInput.addEventListener('click', userLogin)
 
 function startGame(event){
-    fetch(`http://localhost:3000/games/1`)
+    console.log(event.target)
+
+    fetch(`http://localhost:3000/games/${event.target.id}`)
     .then(function(response){
         return response.json()
     })
@@ -16,4 +20,35 @@ function startGame(event){
         })
     })
 
+}
+
+function userLogin(event){
+   let userInput = document.querySelector('#login-input').value;
+   console.log(userInput)
+    fetch(`http://localhost:3000/users`, {
+        method: `POST`,
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+            username: userInput
+        })
+    }).then(res => res.json())
+    .then(res => {
+        let element = document.getElementById('login')
+        hideElement(element)
+        let next= document.getElementById('welcome')
+        showElement(next)
+        let addName = document.querySelector('#welcome h2')
+        addName.innerText += " " + res.username.charAt(0).toUpperCase() + res.username.slice(1) + "!"; 
+    })
+}
+
+function hideElement(element){
+    element.classList.add('hide')
+}
+
+function showElement(next){
+    next.classList.remove('hide')
 }

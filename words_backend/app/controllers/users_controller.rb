@@ -5,7 +5,8 @@ class UsersController < ApplicationController
   end
 
   def create
-    user = User.create(:username)
+    # byebug
+    user = User.find_or_create_by(username: params[:username])
     render json: user, only: [:username]
   end
 end

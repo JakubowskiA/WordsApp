@@ -27,3 +27,7 @@ header{
 .col-5{
     background-color: pink;
 }
+
+.hide{
+    display: none;
+}
