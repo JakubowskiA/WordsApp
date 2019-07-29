@@ -5,6 +5,12 @@ header{
     /* background-color: ; */
     padding:15px;
     /* color: ; */
-    width: 100%;
+    /* width: 100%; */
     /* font-family: ; */
+}
+
+#sidebar{
+    left: 0;
+    width: 40%;
+    background-color: blue;
 }
