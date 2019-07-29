@@ -1,4 +1,10 @@
-Game.destroy_all
+require "rest-client"
+words = RestClient.get("https://norvig.com/ngrams/enable1.txt")
 
-# Games
-g1 = Game.create(letters: [], possibilities: [])
+wordsArray = words.body.split("\n")
+
+Word.destroy_all
+
+wordsArray.each do |word|
+  Word.create!(words: word)
+end
