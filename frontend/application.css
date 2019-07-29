@@ -1,10 +1,11 @@
 header{
     top : 0;
     text-align : center;
-    font-size : 24pt;
-    /* background-color: ; */
+    font-size : 44pt;
+    background-image: linear-gradient(to right, #4facfe 0%, #00f2fe 100%);
     padding:15px;
-    /* color: ; */
+    font-family: 'Monoton', cursive;
+    color: whitesmoke;
     /* width: 100%; */
     /* font-family: ; */
 }
@@ -16,7 +17,7 @@ header{
 }
 
 .container-fluid{
-    background-color: aqua;
+    /* background-color: aqua; */
     text-align: center;
 }
 
@@ -30,4 +31,12 @@ header{
 
 .hide{
     display: none;
+}
+
+h2{
+    padding: 10px;
+}
+
+.main-element{
+    padding: 10px;
 }
