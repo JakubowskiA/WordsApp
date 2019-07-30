@@ -9,14 +9,37 @@ const timer = document.getElementById('timer')
 const playDiv = document.getElementById('play-div')
 const score = document.getElementById('score')
 const gameOver = document.getElementById('game-over')
-
+const leaderboard = document.getElementById('leaderboard')
+let userID;
 let currentScore = 0
+let leaders = {}
+
+function fetchLeaderBoard(){
+    fetch(`http://localhost:3000/users`)
+    .then(res => res.json())
+    .then(res => {
+        createLeaderboard(res)
+    })
+}
+
+function createLeaderboard(res) {
+    leaderboard.innerHTML = "<h2 style = 'width: 100%;'>Leaderboard</h2><br><ol id='leaderList'></ol>";
+    let lineOL = document.getElementById('leaderList');
+    // lineOL.innerText = 'Leaderboard:'
+    res.forEach(user => {
+        let line = document.createElement('li');
+        line.innerText = user.username.charAt(0).toUpperCase() + user.username.slice(1) + " : " + user.highscore;
+        lineOL.appendChild(line)
+    })
+    leaderboard.appendChild(lineOL);
+}
 
 playDiv.addEventListener('click', function(){
     let gameOn = document.querySelector('#game')
     gameOn.classList.remove('hide')
     let clickPlay = document.getElementById('play-div')
     clickPlay.classList.add('hide')
+    setTimer()
 })
 
 let possibilites = []
@@ -34,13 +57,19 @@ function startGame(level){
     })
     .then(function(json){
         console.log(json);
+        letters.innerText = ""
+        currentScore = 0
+        score.innerText = currentScore
         json.letters.forEach(letter =>{
             // letters.innerText = ""
             letters.innerText += " " + letter
         })
         possibilities = json.possibilities
-        playDiv.classList.remove('hide')
-        setTimer()
+        wordList.innerHTML = ''
+        showElement(playDiv)
+        hideElement(welcome)
+        fetchLeaderBoard()
+        // setTimeout(setTimer(), 2000)
     })
 
 }
@@ -62,6 +91,7 @@ function userLogin(event){
     .then(res => {
         // hide:login, welcome
         // show:welcome, level
+        userID = res.id;
         let element = document.getElementById('login')
         hideElement(element)
         let next= document.getElementById('welcome')
@@ -80,6 +110,7 @@ function addLevelSelectListener(event){
     // debugger
     levelSelect.addEventListener('click', chooseLevel)
 }
+
 function chooseLevel(event){
    const level = event.target.id
 //    showElement(game)
@@ -96,11 +127,13 @@ function chooseLevel(event){
    }
 }
 
+let usedWords = []
 
 function submitWord(event){
     let submittedWord = event.target.firstElementChild.value
     // debugger
-    if (possibilities.includes(submittedWord)){
+    if (possibilities.includes(submittedWord) && !usedWords.includes(submittedWord)){
+        usedWords.push(submittedWord)
         gameInput.value = ''
         currentScore += submittedWord.length
         score.innerText = currentScore
@@ -111,7 +144,6 @@ function submitWord(event){
         gameInput.value = ''
         gameInput.placeholder = "Invalid word";
     }
-
 }
 
 function addWordToWordList(submittedWord) {
@@ -134,34 +166,39 @@ function showElement(next){
     next.classList.remove('hide')
 }
 
-
 function setTimer(){
     // Set the date we're counting down to
-var countDownDate = new Date().getTime() + 60000;
-
-// Update the count down every 1 second
-var x = setInterval(function() {
-
- // Get today's date and time
- var now = new Date().getTime();
-
- // Find the distance between now and the count down date
- var distance = countDownDate - now;
-
- // Time calculations for days, hours, minutes and seconds
- var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
- var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
- // Output the result in an element with id="demo"
- timer.innerHTML ='0' + minutes + " : " + seconds;
-
- // If the count down is over, write some text
- if (distance < 0) {
-   clearInterval(x);
-   document.getElementById("timer").innerHTML = "Times Up!";
-   timeUp()
- }
-}, 1000);
+    var countDownDate = new Date().getTime() + 60000;
+    // Update the count down every 1 second
+    var x = setInterval(function() {
+        // Get today's date and time
+        var now = new Date().getTime();
+        // Find the distance between now and the count down date
+        var distance = countDownDate - now;
+        // Time calculations for days, hours, minutes and seconds
+        //  var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+        // Output the result in an element with id="demo"
+        timer.innerHTML = seconds;
+        // If the count down is over, write some text
+        if (distance < 0) {
+            clearInterval(x);
+            document.getElementById("timer").innerHTML = "Times Up!";
+            fetch(`http://localhost:3000/users/${userID}`,{
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({
+                    highscore: currentScore
+                })   
+            })
+            .then(res => res.json())
+            .then(res => console.log(res))
+            timeUp()
+        }
+    }, 1000);
 }
 
 function timeUp(){
@@ -174,6 +211,5 @@ function timeUp(){
         hideElement(gameOver)
         hideElement(game)
         showElement(levelSelect)
-    })
-    
+    }) 
 }

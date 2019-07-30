@@ -1,4 +1,10 @@
 class UsersController < ApplicationController
+  def index
+    users = User.all.select { |user| user.highscore != nil }
+    users = users.sort_by { |user| user.highscore }.reverse
+    render json: users, only: [:username, :highscore]
+  end
+
   def show
     user = User.find(params[:id])
     render json: user, only: [:username]
@@ -7,6 +13,17 @@ class UsersController < ApplicationController
   def create
     # byebug
     user = User.find_or_create_by(username: params[:username])
-    render json: user, only: [:username]
+    render json: user, only: [:id, :username]
+  end
+
+  def update
+    user = User.find(params[:id])
+    if (user[:highscore] == nil)
+      user[:highscore] = params[:highscore]
+    elsif (params[:highscore] > user[:highscore])
+      user[:highscore] = params[:highscore]
+    end
+    user.save
+    render json: user, only: [:id, :username, :highscore]
   end
 end
