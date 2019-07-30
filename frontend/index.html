@@ -43,9 +43,13 @@
     <div class="container-fluid">
       <div class="row">
         <div class="col-7 main-element">
+          <!-- Intro -->
+          <div id="intro">
+          <h1>Welcome to Wordle!</h1>
+        </div>
           <!-- Select Level -->
-          <div id='level-group'> 
-            <h3>Select Your Level</h3>
+          <div id='level-group' class="hide main-element"> 
+            <h2>Select Your Level</h2>
             <div class="btn-group" id='level-selector'>
               <button type="button" id='easy' class="btn btn-secondary">Easy</button>
               <button type="button" id='medium' class="btn btn-secondary">Medium</button>
@@ -53,7 +57,7 @@
             </div>
           </div> 
           <!-- Game -->
-          <div>
+          <div id="game" class="hide main-element">
           <div class = "row" id="letters">
           </div> 
           <div class = "row" id="input">
@@ -71,7 +75,7 @@
 
         <div class="col-5 main-element">
           <!-- Login Section -->
-          <div id="login">
+          <div id="login" class="main-element">
             <h2>Login</h2>
             <form id = "login-form">
               <input type="text" id="login-input" placeholder="Enter your username">
@@ -80,13 +84,15 @@
             </form>
           </div>
           <!-- Welcome Section -->
-          <div id="welcome" class="hide">
+          <div id="welcome" class="hide main-element">
             <h2>Welcome to Wordle, </h2>
           </div>
+
+          
           <div class='row' id='leaderboard'></div>
           <div class='row' id='high-score'></div>
           <div class='row' id='longest-word'></div>
-          <div class='row' id='login'></div>
+          <!-- <div class='row' id='login'></div> -->
         </div>
       </div>
      </div>

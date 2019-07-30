@@ -1,8 +1,8 @@
 const startGameBtn = document.getElementById('level-selector')
-startGameBtn.addEventListener('click', startGame)
 const letters = document.querySelector('#letters')
-
 const loginInput = document.getElementById('submit')
+
+startGameBtn.addEventListener('click', startGame)
 loginInput.addEventListener('click', userLogin)
 
 function startGame(event){
@@ -41,14 +41,20 @@ function userLogin(event){
         let next= document.getElementById('welcome')
         showElement(next)
         let addName = document.querySelector('#welcome h2')
-        addName.innerText += " " + res.username.charAt(0).toUpperCase() + res.username.slice(1) + "!"; 
+        addName.innerText += " " + res.username.charAt(0).toUpperCase() + res.username.slice(1) + "!";
+        let level = document.getElementById('level-group')
+        showElement(level)
+        let welcome = document.getElementById('intro')
+        hideElement(welcome)
     })
 }
 
+// Hide element
 function hideElement(element){
     element.classList.add('hide')
 }
 
+// Show element
 function showElement(next){
     next.classList.remove('hide')
 }
