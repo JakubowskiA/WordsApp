@@ -16,7 +16,7 @@ def checkWord(req, test)
   iterator = 0
   if (test.match(/^[#{req}]+$/))
     test.split("").each do |char|
-      if test.scan(/#{char}/).length == req.scan(/#{char}/).length
+      if test.scan(/#{char}/).length == req.scan(/#{char}/).length || test.scan(/#{char}/).length < req.scan(/#{char}/).length
         iterator += 1
       end
     end
