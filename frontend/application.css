@@ -15,10 +15,18 @@ header{
     width: 40%;
     background-color: blue;
 } */
+body {
+    background: linear-gradient(to right, #4facfe 0%, #00f2fe 100%) no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover;
+  }
 
 .container-fluid{
     /* background-color: aqua; */
     text-align: center;
+    align-content: center;
 }
 
 .col-7{
@@ -68,4 +76,9 @@ h2{
     background-color: whitesmoke;
     padding: 20px 20px 20px 20px;
     margin-left: 10px;
+ }
+
+ .card{
+     min-height: 25em;
+     width: 40%;
  }
