@@ -1,14 +1,14 @@
 const startGameBtn = document.getElementById('level-selector')
 const letters = document.querySelector('#letters')
 const loginInput = document.getElementById('submit')
+const levelSelect = document.getElementById('level-group')
 
-startGameBtn.addEventListener('click', startGame)
+
+// startGameBtn.addEventListener('click', startGame)
 loginInput.addEventListener('click', userLogin)
 
-function startGame(event){
-    console.log(event.target)
-
-    fetch(`http://localhost:3000/games/${event.target.id}`)
+function startGame(level){
+    fetch(`http://localhost:3000/games/${level}`)
     .then(function(response){
         return response.json()
     })
@@ -36,6 +36,8 @@ function userLogin(event){
         })
     }).then(res => res.json())
     .then(res => {
+        // hide:login, welcome
+        // show:welcome, level
         let element = document.getElementById('login')
         hideElement(element)
         let next= document.getElementById('welcome')
@@ -47,6 +49,27 @@ function userLogin(event){
         let welcome = document.getElementById('intro')
         hideElement(welcome)
     })
+    .then(addLevelSelectListener(event))
+}
+
+function addLevelSelectListener(event){
+    // debugger
+    levelSelect.addEventListener('click', chooseLevel)
+}
+function chooseLevel(event){
+   const level = event.target.id
+   showElement(game)
+   hideElement(levelSelect)
+    // debugger
+   if (level === 'easy') {
+        startGame(level)
+   }
+   else if (level === 'medium'){
+        startGame(level)
+   }
+   else if (level === 'hard'){
+        startGame(level)
+   }
 }
 
 // Hide element
