@@ -10,11 +10,11 @@ header{
     /* font-family: ; */
 }
 
-#sidebar{
+/* #sidebar{
     left: 0;
     width: 40%;
     background-color: blue;
-}
+} */
 
 .container-fluid{
     /* background-color: aqua; */
@@ -23,6 +23,7 @@ header{
 
 .col-7{
     background-color: blue;
+    text-align: center;
 }
 
 .col-5{
@@ -45,4 +46,9 @@ h2{
 .main-element{
     padding: 20px;
     text-align: center;
+}
+
+#letters{
+    text-align: center;
+    font-size: 20pt;
 }

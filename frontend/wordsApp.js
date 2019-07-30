@@ -1,7 +1,9 @@
-const startGameBtn = document.getElementById('level-selector')
+// const startGameBtn = document.getElementById('level-selector')
 const letters = document.querySelector('#letters')
 const loginInput = document.getElementById('submit')
 const levelSelect = document.getElementById('level-group')
+const wordList = document.getElementById("word-list")
+const gameInput = document.getElementById("game-input")
 
 
 // startGameBtn.addEventListener('click', startGame)
