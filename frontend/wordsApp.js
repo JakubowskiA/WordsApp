@@ -206,6 +206,7 @@ function timeUp(){
     showElement(gameOver)
     returnScore.innerText += " " + currentScore
     document.querySelector('#click-to-restart').addEventListener('click', function(){
+        usedWords=[]
         currentScore = 0
         hideElement(gameOver)
         hideElement(game)
