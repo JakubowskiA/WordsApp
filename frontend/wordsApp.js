@@ -217,4 +217,10 @@ function timeUp(){
     }) 
 }
 
-// gameInput.addEventListener
+gameInput.addEventListener('change', resetInner)
+
+function resetInner(){
+    if (gameInput.placeholder === "Invalid word"){
+        gameInput.placeholder = "Enter your word here."
+    }
+}
