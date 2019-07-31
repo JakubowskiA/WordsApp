@@ -11,6 +11,8 @@ const score = document.getElementById('score')
 const gameOver = document.getElementById('game-over')
 const leaderboard = document.getElementById('leaderboard')
 const returnScore = document.getElementById('return-score')
+const navBar = document.getElementById('navbar')
+const login = document.getElementById('login')
 let userID;
 let currentScore = 0
 let leaders = {}
@@ -21,6 +23,36 @@ function fetchLeaderBoard(){
     .then(res => {
         createLeaderboard(res)
     })
+}
+
+function addNavListeners(res) {
+    navBar.addEventListener('click', chooseNav)
+}
+
+function chooseNav(event) {
+    let nameAdd = document.querySelector('#welcome h2')
+    const navSelect = event.target.id
+       if (navSelect === 'login-nav') {
+        hideElement(welcome) 
+        hideElement(rules)  
+        leaderboard.classList.remove('row')
+        hideElement(leaderboard) 
+        showElement(login)
+       }
+       else if (navSelect === 'leaderboard-nav'){
+        hideElement(welcome) 
+        hideElement(login)  
+        hideElement(rules)
+        fetchLeaderBoard()
+        showElement(leaderboard)
+       }
+       else if (navSelect === 'rules-nav'){
+        hideElement(welcome) 
+        hideElement(login)  
+        leaderboard.classList.remove('row')
+        hideElement(leaderboard) 
+        showElement(rules)
+       }
 }
 
 function createLeaderboard(res) {
@@ -74,7 +106,8 @@ function startGame(level){
 
 
 function userLogin(event){
-   let userInput = document.querySelector('#login-input').value;
+   event.preventDefault()
+    let userInput = document.querySelector('#login-input').value;
    console.log(userInput)
     fetch(`http://localhost:3000/users`, {
         method: `POST`,
@@ -95,11 +128,13 @@ function userLogin(event){
         let next= document.getElementById('welcome')
         showElement(next)
         let addName = document.querySelector('#welcome h2')
-        addName.innerText += " " + res.username.charAt(0).toUpperCase() + res.username.slice(1) + "!";
+        addName.innerHTML = `<h2>Welcome to Wordle, ${res.username.charAt(0).toUpperCase()}${res.username.slice(1)}!</h2>`;
+        debugger
         let level = document.getElementById('level-group')
         showElement(level)
         let welcome = document.getElementById('intro')
         hideElement(welcome)
+        addNavListeners(res)
     })
     .then(addLevelSelectListener(event))
 }
@@ -128,6 +163,7 @@ function chooseLevel(event){
 let usedWords = []
 
 function submitWord(event){
+    event.preventDefault()
     let submittedWord = event.target.firstElementChild.value
     // debugger
     if (possibilities.includes(submittedWord) && !usedWords.includes(submittedWord)){
@@ -146,12 +182,8 @@ function submitWord(event){
 
 function addWordToWordList(submittedWord) {
     const newWord = document.createElement('li')
-    newWord.innerText = submittedWord
+    newWord.innerHTML = `<li id=wordlist> ${submittedWord} </li>`
     wordList.appendChild(newWord)
-}
-
-function rejectWord(){
-    
 }
 
 // Hide element
