@@ -29,13 +29,13 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item active">
-            <a class="nav-link" href="#">Enter your name <span class="sr-only">(current)</span></a>
+            <a class="nav-link" id='login-nav' href="#">Login <span class="sr-only">(current)</span></a>
           </li>
           <li class="nav-item active">
-            <a class="nav-link" href="#">See Leaderboard <span class="sr-only">(current)</span></a>
+            <a class="nav-link" id='leaderboard-nav' href="#">See Leaderboard <span class="sr-only">(current)</span></a>
           </li>
           <li class="nav-item active">
-            <a class="nav-link" href="#">View High Score <span class="sr-only">(current)</span></a>
+            <a class="nav-link" id='rules-nav' href="#">View Rules <span class="sr-only">(current)</span></a>
           </li>
         </ul>
       </div>
@@ -44,8 +44,8 @@
 
     <div class="container-fluid" style = " text-align: center; margin: auto;">
       <div class="row" style = "align-content: center;">
-        <div class = 'card border-0 shadow my-5' style = "margin: 4em 7.5em; width: 40%; height: 70%; border-radius: 150px ">
-          <div class = 'card-body main-element'>
+        <div class = 'card main-element border-0 shadow my-5' style = "margin: 4em 7.5em; width: 40%; height: 70%; border-radius: 100px" >
+          <div class = 'card-body'>
         <div>
           <!-- Intro -->
           <div id="intro">
@@ -68,22 +68,21 @@
               <h4>You will be given a collection of letters. From these letters, you have one minute to make as many words as you can.</h4>
               <br>
               <h4></h4>
-            <button type="button" id='click-to-start' class="btn btn-secondary">Play</button>
+            <button type="button" id='click-to-start' class="btn btn-primary">Play</button>
           </div>
           <!-- Game -->
           <div id="game" class="hide game">
             <div id="score-and-timer">
               Score: <div id = "score" class = "score"></div>
-              Timer: <div id = 'timer' class='score'></div>
+              &emsp; Timer: <div id = 'timer' class='score'></div>
             </div>
             <br><br>
-          <div class = "row" id="letters" style="text-align: center">
-          </div> 
+          <div class = "row" id="letters"></div> 
           <br><br>
-          <div class = "row" id="input">
-            <form id="input-form">
-              <input type="text" placeholder="Enter your word here." id="game-input">
-              <input type="submit" id="submit-word">
+          <div class = "row" id="input" style="text-align: center">
+            <form id="input-form" style='display: flex;'>
+              <input class='form-control' type="text" placeholder="Enter your word here." id="game-input">
+              <input class='btn btn-primary' type="submit" id="submit-word">
             </form>
           </div> 
           <br><br>
@@ -98,22 +97,21 @@
           <br>
           <h3 id="return-score">Your Score was </h3>
           <br><br>
-          <button type="button" id='click-to-restart' class="btn btn-secondary">Play again</button>
+          <button type="button" id='click-to-restart' class="btn btn-primary">Play again</button>
         </div>
       </div>
       </div>
       </div>
 
-
-        <div class='card border-0 shadow my-5' style = "margin: 4em 2em; width: 30%; height: 70%; border-radius: 150px">
-          <div class='card-body'>
+      <div class = 'card main-element border-0 shadow my-5' style = "margin: 4em 2em; width: 30%; min-height: 70%; border-radius: 100px" >
+        <div class = 'card-body' >
           <!-- Login Section -->
           <div id="login" class="main-element">
             <h2 class="h2title">Login</h2>
             <form id = "login-form">
-              <input type="text" id="login-input" placeholder="Enter your username">
+              <input class='form-control' type="text" id="login-input" placeholder="Enter your username">
               <br><br>
-              <input id='submit' type="submit">
+              <input class='btn btn-primary' id='submit' type="submit">
             </form>
           </div>
           <!-- Welcome Section -->
@@ -121,11 +119,10 @@
             <h2>Welcome to Wordle, </h2>
           </div>
 
-
+          <!-- Leaderboard -->
           <div class='row hide' id='leaderboard' style="padding-left: 10%"></div>
           <div class='row' id='high-score'></div>
           <div class='row' id='longest-word'></div>
-          <!-- <div class='row' id='login'></div> -->
         </div>
       </div>
       </div>
