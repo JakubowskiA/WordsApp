@@ -15,16 +15,15 @@
     <link href="https://fonts.googleapis.com/css?family=Darker+Grotesque|Montserrat|Poppins|Questrial|Raleway&display=swap" rel="stylesheet">
 
   </head>
-  <header>Wordle</header>
+  
   <body>
     
      <!-- Nav Bar -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light" id='navbar'>
       <a class="navbar-brand" href="#">WORDLE</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-    
     
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
@@ -41,8 +40,11 @@
       </div>
     </nav>
 
+    
+    
 
     <div class="container-fluid" style = " text-align: center; margin: auto;">
+      <br><br><header>Wordle</header>
       <div class="row" style = "align-content: center;">
         <div class = 'card main-element border-0 shadow my-5' style = "margin: 4em 7.5em; width: 40%; height: 70%; border-radius: 100px" >
           <div class = 'card-body'>
@@ -120,8 +122,15 @@
 
           <!-- Leaderboard -->
           <div class='row hide' id='leaderboard' style="padding-left: 10%"></div>
-          <div class='row' id='high-score'></div>
-          <div class='row' id='longest-word'></div>
+
+          <!-- Rules -->
+          <div class='hide' id='rules'>
+            <h3>How to Play</h3>
+            <br>
+            <h4 style="line-height: 1.5em;">You will be given a collection of letters. From these letters, you have one minute to make as many words as you can.</h4>
+            <br>
+          </div>
+
         </div>
       </div>
       </div>
