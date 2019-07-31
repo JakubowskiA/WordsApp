@@ -1,7 +1,7 @@
 header{
     top : 0;
     text-align : center;
-    font-size : 50pt;
+    font-size : 68pt;
     background-image: linear-gradient(to right, #4facfe 0%, #00f2fe 100%);
     padding:15px;
     font-family: 'Monoton', cursive;
@@ -23,6 +23,10 @@ body {
     -o-background-size: cover;
     font-family: 'Questrial', sans-serif;
   }
+
+#wordle-head {
+    font-family: 'Monoton', cursive;
+}
 
 .container-fluid{
     /* background-color: aqua; */
