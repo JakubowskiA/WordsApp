@@ -47,7 +47,7 @@
     <div class="container-fluid" style = " text-align: center; margin: auto;">
       <br><br><header>Wordle</header>
       <div class="row" style = "align-content: center;">
-        <div class = 'card main-element border-0 shadow my-5' style = "margin: 4em 7.5em; width: 40%; height: 70%; border-radius: 100px" >
+        <div class = 'card main-element border-0 shadow my-5' style = "margin: 4em 2.7em; width: 50%; height: 70%; border-radius: 100px" >
           <div class = 'card-body'>
         <div>
           <!-- Intro -->
@@ -106,7 +106,7 @@
       </div>
       </div>
 
-      <div class = 'card main-element border-0 shadow my-5' style = "margin: 4em 2em; width: 30%; min-height: 70%; border-radius: 100px" >
+      <div class = 'card main-element border-0 shadow my-5' style = "margin: 4em 1em; width: 40%; min-height: 70%; border-radius: 100px" >
         <div class = 'card-body' >
           <!-- Login Section -->
           <div id="login" class="main-element">
@@ -124,7 +124,21 @@
           </div>
 
           <!-- Leaderboard -->
-          <div class='row hide' id='leaderboard' style="padding-left: 10%"></div>
+          <div class='row hide' id='leaderboard' style="padding-left: 10%;">
+            <h2 style = "width:100%; margin-left: -1em;" class = 'hide'>Leaderboard</h2>
+            <table class="table table-dark hide" id="leader-table">
+              <thead>
+                <tr>
+                  <th scope="col">#Rank</th>
+                  <th scope="col">Username</th>
+                  <th scope="col">High Score</th>
+                  <th scope="col">Longest Word</th>
+                </tr>
+              </thead>
+              <tbody id = "table-body">
+              </tbody>
+            </table>
+          </div>
 
           <!-- Rules -->
           <div class='hide' id='rules'>

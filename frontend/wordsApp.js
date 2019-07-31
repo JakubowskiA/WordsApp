@@ -14,7 +14,8 @@ const returnScore = document.getElementById('return-score')
 const navBar = document.getElementById('navbar')
 const login = document.getElementById('login')
 let userID;
-let currentScore = 0
+let currentScore = 0;
+let longestWord = '';
 let leaders = {}
 
 function fetchLeaderBoard(){
@@ -24,10 +25,10 @@ function fetchLeaderBoard(){
         createLeaderboard(res)
     })
 }
-
-function addNavListeners(res) {
+function addNavListeners(res){
     navBar.addEventListener('click', chooseNav)
 }
+addNavListeners("black")
 
 function chooseNav(event) {
     let nameAdd = document.querySelector('#welcome h2')
@@ -41,7 +42,7 @@ function chooseNav(event) {
        }
        else if (navSelect === 'leaderboard-nav'){
         hideElement(welcome) 
-        hideElement(login)  
+        hideElement(login) 
         hideElement(rules)
         fetchLeaderBoard()
         showElement(leaderboard)
@@ -56,14 +57,21 @@ function chooseNav(event) {
 }
 
 function createLeaderboard(res) {
-    leaderboard.innerHTML = "<h2 style = 'width: 100%;'>Leaderboard</h2><br><br><ol id='leaderList'></ol>";
-    let lineOL = document.getElementById('leaderList');
-    res.forEach(user => {
-        let line = document.createElement('li');
-        line.innerText = user.username.charAt(0).toUpperCase() + user.username.slice(1) + ": " + user.highscore;
-        lineOL.appendChild(line)
+    let table = document.getElementById('leader-table')
+    let leaderHeading = document.querySelector('#leaderboard h2')
+    leaderHeading.classList.remove('hide');
+    table.classList.remove('hide');
+    let tableBody = document.querySelector('#table-body');
+    tableBody.innerHTML = ""
+    let iterator = 0
+    res.forEach(user =>{
+        let line = document.createElement('tr') 
+        line.innerHTML = `<th scope="row">${++iterator}</th>
+                            <td>${user.username}</td>
+                            <td>${user.highscore}</td>
+                            <td>${user.longest_word}</td>`
+        tableBody.appendChild(line);
     })
-    leaderboard.appendChild(lineOL);
 }
 
 playDiv.addEventListener('click', function(){
@@ -122,6 +130,7 @@ function userLogin(event){
     .then(res => {
         // hide:login, welcome
         // show:welcome, level
+        longestWord = res.longest_word;
         userID = res.id;
         let element = document.getElementById('login')
         hideElement(element)
@@ -129,7 +138,6 @@ function userLogin(event){
         showElement(next)
         let addName = document.querySelector('#welcome h2')
         addName.innerHTML = `<h2>Welcome to Wordle, ${res.username.charAt(0).toUpperCase()}${res.username.slice(1)}!</h2>`;
-        debugger
         let level = document.getElementById('level-group')
         showElement(level)
         let welcome = document.getElementById('intro')
@@ -167,6 +175,9 @@ function submitWord(event){
     let submittedWord = event.target.firstElementChild.value
     // debugger
     if (possibilities.includes(submittedWord) && !usedWords.includes(submittedWord)){
+        if(submittedWord.length > longestWord.length){
+            longestWord = submittedWord;
+        }
         usedWords.push(submittedWord)
         gameInput.value = ''
         currentScore += submittedWord.length
@@ -214,6 +225,7 @@ function setTimer(){
         if (distance < 0) {
             clearInterval(x);
             document.getElementById("timer").innerHTML = "Times Up!";
+            debugger
             fetch(`http://localhost:3000/users/${userID}`,{
                 method: 'PATCH',
                 headers: {
@@ -221,7 +233,8 @@ function setTimer(){
                     'Accept': 'application/json'
                 },
                 body: JSON.stringify({
-                    highscore: currentScore
+                    highscore: currentScore,
+                    longest_word: longestWord
                 })   
             })
             .then(res => res.json())
