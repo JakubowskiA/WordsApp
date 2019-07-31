@@ -45,10 +45,10 @@ h2{
     font-size: 40pt;
 }
 
-/* .main-element{
-    padding: 18%;
+.main-element{
+    padding: 1%;
     text-align: center;
-} */
+}
 
 #letters{
     text-align: center;
@@ -93,6 +93,7 @@ h1{
 
 h3{
     font-family: 'Questrial', sans-serif; 
+    font-size: 30pt;
 }
 
 .h2title{
@@ -138,6 +139,13 @@ h4{
 }
 
 
+
 #wordlist {
     font-family: 'Questrial', sans-serif;
 }
+
+li{
+    font-size: 16pt;
+    line-height: 1.5em;
+}
+
