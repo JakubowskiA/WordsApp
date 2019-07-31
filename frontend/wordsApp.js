@@ -1,6 +1,6 @@
 // const startGameBtn = document.getElementById('level-selector')
 const letters = document.querySelector('#letters')
-const loginInput = document.getElementById('submit')
+const loginForm = document.getElementById('login-form')
 const levelSelect = document.getElementById('level-group')
 const wordList = document.getElementById("word-list")
 const gameInput = document.getElementById("game-input")
@@ -48,7 +48,7 @@ inputForm.addEventListener('submit', submitWord)
 
 
 // startGameBtn.addEventListener('click', startGame)
-loginInput.addEventListener('click', userLogin)
+loginForm.addEventListener('submit', userLogin)
 
 function startGame(level){
     fetch(`http://localhost:3000/games/${level}`)
@@ -208,6 +208,7 @@ function timeUp(){
     showElement(gameOver)
     document.getElementById('return-score').innerText += " " + currentScore
     document.querySelector('#click-to-restart').addEventListener('click', function(){
+        currentScore = 0
         hideElement(gameOver)
         hideElement(game)
         showElement(levelSelect)

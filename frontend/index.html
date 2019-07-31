@@ -12,6 +12,7 @@
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script defer src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <link href="https://fonts.googleapis.com/css?family=Monoton&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Darker+Grotesque|Montserrat|Poppins|Questrial|Raleway&display=swap" rel="stylesheet">
 
   </head>
   <header>Wordle</header>
@@ -28,7 +29,7 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item active">
-            <a class="nav-link" href="#">Login <span class="sr-only">(current)</span></a>
+            <a class="nav-link" href="#">Enter your name <span class="sr-only">(current)</span></a>
           </li>
           <li class="nav-item active">
             <a class="nav-link" href="#">See Leaderboard <span class="sr-only">(current)</span></a>
@@ -43,8 +44,8 @@
 
     <div class="container-fluid" style = " text-align: center; margin: auto;">
       <div class="row" style = "align-content: center;">
-        <div class = 'card' style = "margin: 4em 2em; width: 40%; height: 70%">
-          <div class = 'card-body'>
+        <div class = 'card border-0 shadow my-5' style = "margin: 4em 7.5em; width: 40%; height: 70%; border-radius: 150px ">
+          <div class = 'card-body main-element'>
         <div>
           <!-- Intro -->
           <div id="intro">
@@ -61,29 +62,31 @@
             </div>
           </div> 
           <!-- Click to start -->
-          <div id="play-div" class="hide">
+          <div id="play-div" class="hide game">
               <h3>How to Play</h3>
+              <br>
+              <h4>You will be given a collection of letters. From these letters, you have one minute to make as many words as you can.</h4>
               <br>
               <h4></h4>
             <button type="button" id='click-to-start' class="btn btn-secondary">Play</button>
           </div>
           <!-- Game -->
-          <div id="game" class="hide main-element">
+          <div id="game" class="hide game">
             <div id="score-and-timer">
               Score: <div id = "score" class = "score"></div>
               Timer: <div id = 'timer' class='score'></div>
             </div>
-            <br>
+            <br><br>
           <div class = "row" id="letters" style="text-align: center">
           </div> 
-          <br>
+          <br><br>
           <div class = "row" id="input">
             <form id="input-form">
               <input type="text" placeholder="Enter your word here." id="game-input">
               <input type="submit" id="submit-word">
             </form>
           </div> 
-          <br>
+          <br><br>
           <h3>Your Words</h3><br>
           <div class = "row">
             <ul id="word-list"></ul>
@@ -92,8 +95,9 @@
         <!-- Game Over -->
         <div id="game-over" class="hide">
           <h2>Game Over!</h2>
-          <h3 id="return-score">Your Score was </h3>
           <br>
+          <h3 id="return-score">Your Score was </h3>
+          <br><br>
           <button type="button" id='click-to-restart' class="btn btn-secondary">Play again</button>
         </div>
       </div>
@@ -101,11 +105,11 @@
       </div>
 
 
-        <div class='card' style = "margin: 4em 2em; width: 30%; height: 70%">
+        <div class='card border-0 shadow my-5' style = "margin: 4em 2em; width: 30%; height: 70%; border-radius: 150px">
           <div class='card-body'>
           <!-- Login Section -->
           <div id="login" class="main-element">
-            <h2>Login</h2>
+            <h2 class="h2title">Login</h2>
             <form id = "login-form">
               <input type="text" id="login-input" placeholder="Enter your username">
               <br><br>
@@ -118,7 +122,7 @@
           </div>
 
 
-          <div class='row hide' id='leaderboard'></div>
+          <div class='row hide' id='leaderboard' style="padding-left: 10%"></div>
           <div class='row' id='high-score'></div>
           <div class='row' id='longest-word'></div>
           <!-- <div class='row' id='login'></div> -->
