@@ -129,6 +129,14 @@ h3{
     text-align: left;
 }
 
+#leader-table{
+    border-radius: 10px;
+    margin-left: -1.8em;
+}
+#leader-table tr{
+    border-radius: 10px;
+}
+
 
 .navbar {
     font-family: 'Questrial', sans-serif;
