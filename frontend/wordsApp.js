@@ -13,6 +13,7 @@ const leaderboard = document.getElementById('leaderboard')
 const returnScore = document.getElementById('return-score')
 let userID;
 let currentScore = 0
+let longestWord = '';
 let leaders = {}
 
 function fetchLeaderBoard(){
@@ -44,11 +45,11 @@ playDiv.addEventListener('click', function(){
 
 let possibilites = []
 
-inputForm.addEventListener('submit', submitWord)
+inputForm.addEventListener('submit', submitWord);
 
 
 // startGameBtn.addEventListener('click', startGame)
-loginForm.addEventListener('submit', userLogin)
+loginForm.addEventListener('submit', userLogin);
 
 function startGame(level){
     fetch(`http://localhost:3000/games/${level}`)
@@ -74,7 +75,9 @@ function startGame(level){
 
 
 function userLogin(event){
+    event.preventDefault();
    let userInput = document.querySelector('#login-input').value;
+   
    console.log(userInput)
     fetch(`http://localhost:3000/users`, {
         method: `POST`,
@@ -128,10 +131,14 @@ function chooseLevel(event){
 let usedWords = []
 
 function submitWord(event){
+    event.preventDefault();
     let submittedWord = event.target.firstElementChild.value
     // debugger
     if (possibilities.includes(submittedWord) && !usedWords.includes(submittedWord)){
         usedWords.push(submittedWord)
+        if(submittedWord.length > longestWord.length){
+            longestWord = submittedWord;
+        }
         gameInput.value = ''
         currentScore += submittedWord.length
         score.innerText = currentScore
@@ -189,11 +196,16 @@ function setTimer(){
                     'Accept': 'application/json'
                 },
                 body: JSON.stringify({
-                    highscore: currentScore
+                    highscore: currentScore,
+                    longest_Word: longestWord
                 })   
             })
             .then(res => res.json())
-            .then(res => console.log(res))
+            .then(res => {
+                console.log(res) 
+                
+            })
+            // fetchLeaderBoard()
             timeUp()
         }
     }, 1000);

@@ -23,7 +23,10 @@ class UsersController < ApplicationController
     elsif (params[:highscore] > user[:highscore])
       user[:highscore] = params[:highscore]
     end
+    if (user.longest_word.length < params[:longest_word].length)
+      user.longest_word = params[:longest_word]
+    end
     user.save
-    render json: user, only: [:id, :username, :highscore]
+    render json: user, only: [:id, :username, :highscore, :longest_word]
   end
 end
