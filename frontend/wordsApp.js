@@ -24,7 +24,7 @@ function fetchLeaderBoard(){
 }
 
 function createLeaderboard(res) {
-    leaderboard.innerHTML = "<h2 style = 'width: 100%;'>Leaderboard</h2><br><ol id='leaderList'></ol>";
+    leaderboard.innerHTML = "<h2 style = 'width: 100%;'>Leaderboard</h2><br><br><ol id='leaderList'></ol>";
     let lineOL = document.getElementById('leaderList');
     // lineOL.innerText = 'Leaderboard:'
     res.forEach(user => {

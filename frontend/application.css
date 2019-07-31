@@ -107,3 +107,10 @@ h3{
     padding: 10%;
     text-align: center;
 }
+li:nth-of-type(1n+11) {
+    display: none;
+} 
+
+h4{
+    line-height: 1.5em;
+}
