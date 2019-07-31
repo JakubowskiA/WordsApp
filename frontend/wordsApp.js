@@ -26,10 +26,9 @@ function fetchLeaderBoard(){
 function createLeaderboard(res) {
     leaderboard.innerHTML = "<h2 style = 'width: 100%;'>Leaderboard</h2><br><br><ol id='leaderList'></ol>";
     let lineOL = document.getElementById('leaderList');
-    // lineOL.innerText = 'Leaderboard:'
     res.forEach(user => {
         let line = document.createElement('li');
-        line.innerText = user.username.charAt(0).toUpperCase() + user.username.slice(1) + " : " + user.highscore;
+        line.innerText = user.username.charAt(0).toUpperCase() + user.username.slice(1) + ": " + user.highscore;
         lineOL.appendChild(line)
     })
     leaderboard.appendChild(lineOL);
@@ -62,8 +61,7 @@ function startGame(level){
         currentScore = 0
         score.innerText = currentScore
         json.letters.forEach(letter =>{
-            // letters.innerText = ""
-            letters.innerText += " " + letter
+            showLetters(letter)
         })
         possibilities = json.possibilities
         wordList.innerHTML = ''
@@ -71,9 +69,7 @@ function startGame(level){
         hideElement(welcome)
         fetchLeaderBoard()
         returnScore.innerText = "Your Score was"
-        // setTimeout(setTimer(), 2000)
     })
-
 }
 
 
@@ -217,6 +213,11 @@ function timeUp(){
     }) 
 }
 
+function showLetters(letter) {
+    let letterBox = document.createElement('div')
+    letters.appendChild(letterBox)
+    letterBox.innerHTML += `<div id='letter-box'>${letter.toUpperCase()}</div>`
+}
 gameInput.addEventListener('change', resetInner)
 
 function resetInner(){
