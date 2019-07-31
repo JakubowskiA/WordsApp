@@ -10,6 +10,7 @@ const playDiv = document.getElementById('play-div')
 const score = document.getElementById('score')
 const gameOver = document.getElementById('game-over')
 const leaderboard = document.getElementById('leaderboard')
+const returnScore = document.getElementById('return-score')
 let userID;
 let currentScore = 0
 let leaders = {}
@@ -23,7 +24,7 @@ function fetchLeaderBoard(){
 }
 
 function createLeaderboard(res) {
-    leaderboard.innerHTML = "<h2 style = 'width: 100%;'>Leaderboard</h2><br><ol id='leaderList'></ol>";
+    leaderboard.innerHTML = "<h2 style = 'width: 100%;'>Leaderboard</h2><br><br><ol id='leaderList'></ol>";
     let lineOL = document.getElementById('leaderList');
     res.forEach(user => {
         let line = document.createElement('li');
@@ -67,6 +68,7 @@ function startGame(level){
         showElement(playDiv)
         hideElement(welcome)
         fetchLeaderBoard()
+        returnScore.innerText = "Your Score was"
     })
 }
 
@@ -202,7 +204,7 @@ function timeUp(){
     hideElement(game)
     // show
     showElement(gameOver)
-    document.getElementById('return-score').innerText += " " + currentScore
+    returnScore.innerText += " " + currentScore
     document.querySelector('#click-to-restart').addEventListener('click', function(){
         currentScore = 0
         hideElement(gameOver)
@@ -215,4 +217,11 @@ function showLetters(letter) {
     let letterBox = document.createElement('div')
     letters.appendChild(letterBox)
     letterBox.innerHTML += `<div id='letter-box'>${letter.toUpperCase()}</div>`
+}
+gameInput.addEventListener('change', resetInner)
+
+function resetInner(){
+    if (gameInput.placeholder === "Invalid word"){
+        gameInput.placeholder = "Enter your word here."
+    }
 }
