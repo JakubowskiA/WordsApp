@@ -10,6 +10,7 @@ const playDiv = document.getElementById('play-div')
 const score = document.getElementById('score')
 const gameOver = document.getElementById('game-over')
 const leaderboard = document.getElementById('leaderboard')
+const returnScore = document.getElementById('return-score')
 let userID;
 let currentScore = 0
 let leaders = {}
@@ -69,6 +70,7 @@ function startGame(level){
         showElement(playDiv)
         hideElement(welcome)
         fetchLeaderBoard()
+        returnScore.innerText = "Your Score was"
         // setTimeout(setTimer(), 2000)
     })
 
@@ -206,7 +208,7 @@ function timeUp(){
     hideElement(game)
     // show
     showElement(gameOver)
-    document.getElementById('return-score').innerText += " " + currentScore
+    returnScore.innerText += " " + currentScore
     document.querySelector('#click-to-restart').addEventListener('click', function(){
         currentScore = 0
         hideElement(gameOver)
@@ -214,3 +216,5 @@ function timeUp(){
         showElement(levelSelect)
     }) 
 }
+
+// gameInput.addEventListener
