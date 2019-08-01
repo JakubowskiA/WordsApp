@@ -2,7 +2,9 @@ class UsersController < ApplicationController
   def index
     users = User.all.select { |user| user.highscore != nil }
     users = users.sort_by { |user| user.highscore }.reverse
-    render json: users, only: [:username, :highscore]
+    users = users[0...5]
+    render json: users, only: [:username, :highscore, :longest_word]
+
   end
 
   def show
@@ -13,7 +15,12 @@ class UsersController < ApplicationController
   def create
     # byebug
     user = User.find_or_create_by(username: params[:username])
-    render json: user, only: [:id, :username]
+
+    if (user.longest_word == nil)
+      user.longest_word = ""
+    end
+    render json: user, only: [:id, :username, :longest_word]
+
   end
 
   def update

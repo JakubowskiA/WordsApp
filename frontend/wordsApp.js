@@ -17,6 +17,8 @@ let userID;
 let currentScore = 0
 let leaders = {}
 
+
+// fetch the leaderboard
 function fetchLeaderBoard(){
     fetch(`http://localhost:3000/users`)
     .then(res => res.json())
@@ -25,19 +27,54 @@ function fetchLeaderBoard(){
     })
 }
 
-function addNavListeners(res) {
+
+//display the leaderboard
+function createLeaderboard(res) {
+    let table = document.getElementById('leader-table')
+    let leaderHeading = document.querySelector('#leaderboard h2')
+    leaderHeading.classList.remove('hide');
+    table.classList.remove('hide');
+    let tableBody = document.querySelector('#table-body');
+    tableBody.innerHTML = ""
+    let iterator = 0
+    res.forEach(user =>{
+        let line = document.createElement('tr') 
+        line.innerHTML = `<th scope="row">${++iterator}</th>
+                            <td>${user.username.charAt(0).toUpperCase() + user.username.slice(1)}</td>
+                            <td>${user.highscore}</td>
+                            <td>${user.longest_word}</td>`
+        tableBody.appendChild(line);
+    })
+}
+
+//add event listeners to the nav-bar
+function addNavListeners(res){
     navBar.addEventListener('click', chooseNav)
 }
 
+
+
+//this function is called with navbar is clicked
 function chooseNav(event) {
     let nameAdd = document.querySelector('#welcome h2')
     const navSelect = event.target.id
        if (navSelect === 'login-nav') {
-        hideElement(welcome) 
-        hideElement(rules)  
-        leaderboard.classList.remove('row')
-        hideElement(leaderboard) 
-        showElement(login)
+        // //hides the game over div which shows the user score in left div
+        // hideElement(gameOver)
+        // //hides welcome message on the right
+        // hideElement(welcome) 
+
+        // if(document.querySelector('#timer').innerHTML == 'Times Up!'){
+        //     showElement(levelSelect)
+        //     document.getElementById('submit').disabled = false;
+        // }else{
+            
+        // }
+        location.reload();
+        // hideElement(rules)  
+        // leaderboard.classList.remove('row')
+        // hideElement(leaderboard) 
+        // showElement(login)
        }
        else if (navSelect === 'leaderboard-nav'){
         hideElement(welcome) 
@@ -55,33 +92,26 @@ function chooseNav(event) {
        }
 }
 
-function createLeaderboard(res) {
-    leaderboard.innerHTML = "<h2 style = 'width: 100%;'>Leaderboard</h2><br><br><ol id='leaderList'></ol>";
-    let lineOL = document.getElementById('leaderList');
-    res.forEach(user => {
-        let line = document.createElement('li');
-        line.innerText = user.username.charAt(0).toUpperCase() + user.username.slice(1) + ": " + user.highscore;
-        lineOL.appendChild(line)
-    })
-    leaderboard.appendChild(lineOL);
-}
 
+//add eventlistener to the 'how to play div'
 playDiv.addEventListener('click', function(){
-    let gameOn = document.querySelector('#game')
-    gameOn.classList.remove('hide')
     let clickPlay = document.getElementById('play-div')
     clickPlay.classList.add('hide')
+    showElement(game)
     setTimer()
 })
 
 let possibilites = []
 
+//runs when user submits a word
 inputForm.addEventListener('submit', submitWord)
 
 
 // startGameBtn.addEventListener('click', startGame)
+
 loginForm.addEventListener('submit', userLogin)
 
+// starts the game and when the game is running the login button is disabled
 function startGame(level){
     fetch(`http://localhost:3000/games/${level}`)
     .then(function(response){
@@ -146,7 +176,6 @@ function addLevelSelectListener(event){
 
 function chooseLevel(event){
    const level = event.target.id
-//    showElement(game)
    hideElement(levelSelect)
     // debugger
    if (level === 'easy') {
@@ -171,19 +200,27 @@ function submitWord(event){
         gameInput.value = ''
         currentScore += submittedWord.length
         score.innerText = currentScore
+        gameInput.style.borderColor = 'lightskyblue';
+        gameInput.style.boxShadow = '0 0 5px lightskyblue'
+
         console.log(currentScore)
         addWordToWordList(submittedWord)
+        gameInput.classList.remove('input-shake')
     }
     else {
-        gameInput.value = ''
+        gameInput.classList.add('input-shake')
+        gameInput.value = '';
+        gameInput.style.borderColor = 'red';
+        gameInput.style.boxShadow = '0 0 5px red'
         gameInput.placeholder = "Invalid word";
     }
 }
 
 function addWordToWordList(submittedWord) {
-    const newWord = document.createElement('li')
-    newWord.innerHTML = `<li id=wordlist> ${submittedWord} </li>`
-    wordList.appendChild(newWord)
+    let newWord = document.createElement('li')
+    newWord.innerText = submittedWord
+    wordList.appendChild(newWord);
+ 
 }
 
 // Hide element
@@ -198,7 +235,7 @@ function showElement(next){
 
 function setTimer(){
     // Set the date we're counting down to
-    var countDownDate = new Date().getTime() + 62000;
+    var countDownDate = new Date().getTime() + 59000;
     // Update the count down every 1 second
     var x = setInterval(function() {
         // Get today's date and time
@@ -240,6 +277,8 @@ function timeUp(){
     document.querySelector('#click-to-restart').addEventListener('click', function(){
         usedWords=[]
         currentScore = 0
+        // fetchLeaderBoard()
+        // showElement(leaderboard)
         hideElement(gameOver)
         hideElement(game)
         showElement(levelSelect)
@@ -249,7 +288,7 @@ function timeUp(){
 function showLetters(letter) {
     let letterBox = document.createElement('div')
     letters.appendChild(letterBox)
-    letterBox.innerHTML += `<div id='letter-box'>${letter.toUpperCase()}</div>`
+    letterBox.innerHTML += `<div class='letter-box'>${letter.toUpperCase()}</div>`
 }
 gameInput.addEventListener('change', resetInner)
 
