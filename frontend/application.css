@@ -106,13 +106,13 @@ h3{
     text-align: center;
 }
 
-#letter-box {
+.letter-box {
     border-radius: 10px;
     border: 4px solid lightskyblue;
-    width: 2em;
     color: white;
+    width: 1.5em;
     background-color: navy;
-    padding: 7px;
+    padding: 5px;
     margin-left: .2em;
     text-align: center;
 }

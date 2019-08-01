@@ -296,7 +296,7 @@ function timeUp(){
 function showLetters(letter) {
     let letterBox = document.createElement('div')
     letters.appendChild(letterBox)
-    letterBox.innerHTML += `<div id='letter-box'>${letter.toUpperCase()}</div>`
+    letterBox.innerHTML += `<div class='letter-box'>${letter.toUpperCase()}</div>`
 }
 gameInput.addEventListener('change', resetInner)
 
