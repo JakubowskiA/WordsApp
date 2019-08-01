@@ -16,7 +16,7 @@ const login = document.getElementById('login')
 let userID;
 let currentScore = 0
 let leaders = {}
-
+let longestWord = "";
 
 // fetch the leaderboard
 function fetchLeaderBoard() {
@@ -150,6 +150,7 @@ function userLogin(event) {
         .then(res => {
             // hide:login, welcome
             // show:welcome, level
+            longestWord = res.longest_word;
             userID = res.id;
             let element = document.getElementById('login')
             hideElement(element)
@@ -193,6 +194,9 @@ function submitWord(event) {
     // debugger
     if (possibilities.includes(submittedWord) && !usedWords.includes(submittedWord)) {
         usedWords.push(submittedWord)
+        if(longestWord.length < submittedWord.length){
+            longestWord = submittedWord;
+        }
         gameInput.value = ''
         currentScore += submittedWord.length
         score.innerText = currentScore
@@ -253,7 +257,8 @@ function setTimer() {
                         'Accept': 'application/json'
                     },
                     body: JSON.stringify({
-                        highscore: currentScore
+                        highscore: currentScore,
+                        longest_word: longestWord
                     })
                 })
                 .then(res => res.json())
