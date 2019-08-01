@@ -5,6 +5,8 @@
 
     <title>WordGame</title>
 
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
     <link rel="stylesheet" href="application.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <script src="wordsApp.js" defer></script>
@@ -65,7 +67,7 @@
               <br><br>
             </div>
           </div> 
-          <!-- Click to start -->
+          <!-- Click play to start div-->
           <div id="play-div" class="hide game">
               <h2 class="h2title">How to Play</h2>
               <br>
@@ -73,18 +75,22 @@
               <br>
             <button type="button" id='click-to-start' class="btn btn-primary">Play</button>
           </div>
-          <!-- Game -->
-          <div id="game" class="hide game">
+          <!-- Click to start div ends here -->
+          <!-- The Game div starts here -->
+          <div id="game" class="hide game" >
+            <!-- Scoring and Timer are here -->
             <div id="score-and-timer">
-              Score: <div id = "score" class = "score"></div>
-              &emsp; Timer: <div id = 'timer' class='score'></div>
+              Score: <div id = "score" ></div>
+              &emsp; Timer: <div id = 'timer'></div>
             </div>
+            <!-- scoring and timer end here -->
             <br><br>
-          <div class = "row" id="letters"></div> 
+            <!-- the letter display div starts here -->
+          <div class = "row" id="letters" style='width: 100%; margin-left: 1em;'></div> 
           <br><br>
-          <div class = "row" id="input" style="text-align: center">
-            <form id="input-form" style='display: flex;'>
-              <input class='form-control' type="text" placeholder="Enter your word here." id="game-input">
+          <div class = "row" id="input" style="text-align:center; width: 100%">
+            <form id="input-form" style='display: flex; margin: 0 auto;'>
+              <input class='form-control' type="text" autofocus="autofocus"  placeholder="Enter your word here." autocomplete="off" id="game-input">
               <input class='btn btn-primary' type="submit" id="submit-word">
             </form>
           </div> 
@@ -94,6 +100,8 @@
             <ul id="word-list"></ul>
           </div> 
         </div>
+        <!-- the letter and word lists div ends here -->
+
         <!-- Game Over -->
         <div id="game-over" class="hide">
           <h2>Game Over!</h2>
@@ -102,17 +110,19 @@
           <br><br>
           <button type="button" id='click-to-restart' class="btn btn-primary">Play again</button>
         </div>
+        <!-- Game over div ends here -->
       </div>
       </div>
       </div>
 
+      <!-- right section with the login and welcome div starts here -->
       <div class = 'card main-element border-0 shadow my-5' style = "margin: 4em 1em; width: 40%; min-height: 70%; border-radius: 100px" >
         <div class = 'card-body' >
           <!-- Login Section -->
           <div id="login" class="main-element">
             <h2 class="h2title">Login</h2>
             <form id = "login-form">
-              <input class='form-control' type="text" id="login-input" placeholder="Enter your username">
+              <input class='form-control' autofocus="autofocus"  type="text" id="login-input" placeholder="Enter your username" required>
               <br><br>
               <input class='btn btn-primary' id='submit' type="submit">
             </form>
@@ -139,7 +149,7 @@
               </tbody>
             </table>
           </div>
-
+          <!-- leaderboard div ends here -->
           <!-- Rules -->
           <div class='hide' id='rules'>
             <h3>How to Play</h3>
@@ -147,7 +157,7 @@
             <h4 style="line-height: 1.5em;">You will be given a collection of letters. From these letters, you have one minute to make as many words as you can.</h4>
             <br>
           </div>
-
+          <!-- end of rules div -->
         </div>
       </div>
       </div>
