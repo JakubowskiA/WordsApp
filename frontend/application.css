@@ -1,9 +1,9 @@
-header{
-    top : 0;
-    text-align : center;
-    font-size : 68pt;
+header {
+    top: 0;
+    text-align: center;
+    font-size: 68pt;
     background-image: linear-gradient(to right, #4facfe 0%, #00f2fe 100%);
-    padding:15px;
+    padding: 15px;
     font-family: 'Monoton', cursive;
     color: mintcream;
     /* width: 100%; */
@@ -22,45 +22,45 @@ body {
     background-size: cover;
     -o-background-size: cover;
     font-family: 'Questrial', sans-serif;
-  }
+}
 
 #wordle-head {
     font-family: 'Monoton', cursive;
 }
 
-.container-fluid{
+.container-fluid {
     /* background-color: aqua; */
     text-align: center;
     align-content: center;
 }
 
-.hide{
+.hide {
     display: none;
 }
 
-#intro{
+#intro {
     padding: 40px;
-    font-size : 64pt;
+    font-size: 64pt;
 }
 
-h2{
+h2 {
     padding: 10px;
     font-family: 'Questrial', sans-serif;
     font-size: 40pt;
 }
 
-.main-element{
+.main-element {
     padding: 1%;
     text-align: center;
 }
 
-#letters{
+#letters {
     text-align: center;
     font-size: 20pt;
 }
 
 
-#timer{
+#timer {
     border-radius: 10px;
     border: 0.5px solid rgb(228, 227, 227);
     border-top: .2em solid #4facfe;
@@ -69,6 +69,7 @@ h2{
     margin-left: 10px;
     min-width: 8em;
 }
+
 
 #score{
     min-width: 8em;
@@ -92,20 +93,21 @@ h2{
     box-shadow: my-5;
 }  */
 
-h1{
+h1 {
     font-family: 'Questrial', sans-serif;
     font-weight: 500;
 }
 
-h3{
-    font-family: 'Questrial', sans-serif; 
+h3 {
+    font-family: 'Questrial', sans-serif;
     font-size: 30pt;
 }
 
-.h2title{
+.h2title {
     font-size: 32pt;
 }
-.game{
+
+.game {
     padding: 10%;
     text-align: center;
 }
@@ -127,14 +129,16 @@ h3{
 }
 
 
-#leader-table{
+#leader-table {
     border-radius: 10px;
     margin-left: -1.8em;
 }
-#leader-table tr{
+
+#leader-table tr {
     border-radius: 10px;
 }
-#leader-table th{
+
+#leader-table th {
     border-top: none;
 }
 
@@ -144,13 +148,13 @@ h3{
 
 li:nth-of-type(1n+11) {
     display: none;
-} 
+}
 
-h4{
+h4 {
     line-height: 1.5em;
 }
 
-#submit-word{
+#submit-word {
     margin-left: 1em;
 }
 
@@ -160,13 +164,13 @@ h4{
     width: 100%;
 }
 
-#word-list li{
+#word-list li {
     font-size: 16pt;
-    text-decoration:none;
+    text-decoration: none;
     display: inline-block;
     color: white;
     background-color: navy;
-    padding:.5em 1em;
+    padding: .5em 1em;
     border-radius: 10px;
     margin-left: .2em;
     margin-top: .2em;
@@ -176,32 +180,69 @@ h4{
     outline: none;
 }
 
-textarea:focus, input:focus{
+textarea:focus,
+input:focus {
     outline: none;
 }
 
 
 .input-shake {
-    animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both;
+    animation: shake 0.82s cubic-bezier(.36, .07, .19, .97) both;
     transform: translate3d(0, 0, 0);
     backface-visibility: hidden;
     perspective: 1000px;
-  }
-  
-  @keyframes shake {
-    10%, 90% {
-      transform: translate3d(-1px, 0, 0);
+}
+
+@keyframes shake {
+
+    10%,
+    90% {
+        transform: translate3d(-1px, 0, 0);
     }
-    
-    20%, 80% {
-      transform: translate3d(2px, 0, 0);
+
+    20%,
+    80% {
+        transform: translate3d(2px, 0, 0);
     }
-  
-    30%, 50%, 70% {
-      transform: translate3d(-4px, 0, 0);
+
+    30%,
+    50%,
+    70% {
+        transform: translate3d(-4px, 0, 0);
     }
-  
-    40%, 60% {
-      transform: translate3d(4px, 0, 0);
+
+    40%,
+    60% {
+        transform: translate3d(4px, 0, 0);
     }
-  }
+}
+
+/* ---- reset ---- */
+body {
+    margin: 0;
+    font: normal 75% Arial, Helvetica, sans-serif;
+}
+
+canvas {
+    display: block;
+    vertical-align: bottom;
+}
+
+/* ---- particles.js container ---- */
+#particles-js {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    background-color: transparent;
+    background-image: url("");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: 50% 50%;
+}
+
+
+
+
