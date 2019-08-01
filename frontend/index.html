@@ -10,6 +10,9 @@
     <link rel="stylesheet" href="application.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <script src="wordsApp.js" defer></script>
+
+
+    <script src="particles.js"></script>
     <script defer src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script defer src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
@@ -19,10 +22,10 @@
   </head>
   
   <body>
-    
+  <div id="particles-js">  
      <!-- Nav Bar -->
     <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light" id='navbar'>
-      <a class="navbar-brand" href="#">WORDLE</a>
+      <a class="navbar-brand" id='wordle-head' href="#">WORDLE</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -33,10 +36,10 @@
             <a class="nav-link" id='login-nav' href="#">Login <span class="sr-only">(current)</span></a>
           </li>
           <li class="nav-item active">
-            <a class="nav-link" id='leaderboard-nav' href="#">See Leaderboard <span class="sr-only">(current)</span></a>
+            <a class="nav-link" id='leaderboard-nav' href="#">Leaderboard <span class="sr-only">(current)</span></a>
           </li>
           <li class="nav-item active">
-            <a class="nav-link" id='rules-nav' href="#">View Rules <span class="sr-only">(current)</span></a>
+            <a class="nav-link" id='rules-nav' href="#">Rules <span class="sr-only">(current)</span></a>
             <!-- hi -->
           </li>
         </ul>
@@ -47,9 +50,9 @@
     
 
     <div class="container-fluid" style = " text-align: center; margin: auto;">
-      <br><br><header>Wordle</header>
+      <br><br><br><header>Wordle</header>
       <div class="row" style = "align-content: center;">
-        <div class = 'card main-element border-0 shadow my-5' style = "margin: 4em 2.7em; width: 50%; height: 70%; border-radius: 100px" >
+        <div class = 'card main-element border-0 shadow my-5' style = "margin: 4em 7.5em; width: 40%; height: 70%; border-radius: 100px" >
           <div class = 'card-body'>
         <div>
           <!-- Intro -->
@@ -150,6 +153,7 @@
             </table>
           </div>
           <!-- leaderboard div ends here -->
+
           <!-- Rules -->
           <div class='hide' id='rules'>
             <h3>How to Play</h3>
@@ -162,6 +166,6 @@
       </div>
       </div>
      </div>
-    
+    </div>
   </body>
 </html>

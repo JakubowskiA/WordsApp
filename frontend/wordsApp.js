@@ -14,8 +14,7 @@ const returnScore = document.getElementById('return-score')
 const navBar = document.getElementById('navbar')
 const login = document.getElementById('login')
 let userID;
-let currentScore = 0;
-let longestWord = '';
+let currentScore = 0
 let leaders = {}
 
 
@@ -41,7 +40,7 @@ function createLeaderboard(res) {
     res.forEach(user =>{
         let line = document.createElement('tr') 
         line.innerHTML = `<th scope="row">${++iterator}</th>
-                            <td>${user.username}</td>
+                            <td>${user.username.charAt(0).toUpperCase() + user.username.slice(1)}</td>
                             <td>${user.highscore}</td>
                             <td>${user.longest_word}</td>`
         tableBody.appendChild(line);
@@ -52,8 +51,7 @@ function createLeaderboard(res) {
 function addNavListeners(res){
     navBar.addEventListener('click', chooseNav)
 }
-// we have to all the function atleast once
-addNavListeners("blah")
+
 
 
 //this function is called with navbar is clicked
@@ -80,7 +78,7 @@ function chooseNav(event) {
        }
        else if (navSelect === 'leaderboard-nav'){
         hideElement(welcome) 
-        hideElement(login) 
+        hideElement(login)  
         hideElement(rules)
         fetchLeaderBoard()
         showElement(leaderboard)
@@ -93,8 +91,6 @@ function chooseNav(event) {
         showElement(rules)
        }
 }
-
-// navbar event listener ends here
 
 
 //add eventlistener to the 'how to play div'
@@ -156,7 +152,6 @@ function userLogin(event){
     .then(res => {
         // hide:login, welcome
         // show:welcome, level
-        longestWord = res.longest_word;
         userID = res.id;
         let element = document.getElementById('login')
         hideElement(element)
@@ -164,6 +159,7 @@ function userLogin(event){
         showElement(next)
         let addName = document.querySelector('#welcome h2')
         addName.innerHTML = `<h2>Welcome to Wordle, ${res.username.charAt(0).toUpperCase()}${res.username.slice(1)}!</h2>`;
+        debugger
         let level = document.getElementById('level-group')
         showElement(level)
         let welcome = document.getElementById('intro')
@@ -200,9 +196,6 @@ function submitWord(event){
     let submittedWord = event.target.firstElementChild.value
     // debugger
     if (possibilities.includes(submittedWord) && !usedWords.includes(submittedWord)){
-        if(submittedWord.length > longestWord.length){
-            longestWord = submittedWord;
-        }
         usedWords.push(submittedWord)
         gameInput.value = ''
         currentScore += submittedWord.length
@@ -265,8 +258,7 @@ function setTimer(){
                     'Accept': 'application/json'
                 },
                 body: JSON.stringify({
-                    highscore: currentScore,
-                    longest_word: longestWord
+                    highscore: currentScore
                 })   
             })
             .then(res => res.json())
