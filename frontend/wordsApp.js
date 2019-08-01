@@ -1,4 +1,4 @@
-// const startGameBtn = document.getElementById('level-selector')
+// declaring variables
 const letters = document.querySelector('#letters')
 const loginForm = document.getElementById('login-form')
 const levelSelect = document.getElementById('level-group')
@@ -13,10 +13,15 @@ const leaderboard = document.getElementById('leaderboard')
 const returnScore = document.getElementById('return-score')
 const navBar = document.getElementById('navbar')
 const login = document.getElementById('login')
+const table = document.getElementById('leader-table')
+const leaderHeading = document.querySelector('#leaderboard h2')
+const tableBody = document.querySelector('#table-body');
+const clickPlay = document.getElementById('play-div')
+let usedWords = []
+let possibilites = []
 let userID;
 let currentScore = 0
 let leaders = {}
-
 
 // fetch the leaderboard
 function fetchLeaderBoard() {
@@ -27,14 +32,10 @@ function fetchLeaderBoard() {
         })
 }
 
-
-//display the leaderboard
+// display the leaderboard
 function createLeaderboard(res) {
-    let table = document.getElementById('leader-table')
-    let leaderHeading = document.querySelector('#leaderboard h2')
     leaderHeading.classList.remove('hide');
     table.classList.remove('hide');
-    let tableBody = document.querySelector('#table-body');
     tableBody.innerHTML = ""
     let iterator = 0
     res.forEach(user => {
@@ -47,96 +48,52 @@ function createLeaderboard(res) {
     })
 }
 
-//add event listeners to the nav-bar
+// add event listeners to the nav-bar
 function addNavListeners(res) {
     navBar.addEventListener('click', chooseNav)
 }
 
-
-
-//this function is called with navbar is clicked
+// this function is called with navbar is clicked
 function chooseNav(event) {
-    let nameAdd = document.querySelector('#welcome h2')
     const navSelect = event.target.id
     if (navSelect === 'login-nav') {
-        // //hides the game over div which shows the user score in left div
-        // hideElement(gameOver)
-        // //hides welcome message on the right
-        // hideElement(welcome) 
-
-        // if(document.querySelector('#timer').innerHTML == 'Times Up!'){
-        //     showElement(levelSelect)
-        //     document.getElementById('submit').disabled = false;
-        // }else{
-
-        // }
         location.reload();
-        // hideElement(rules)  
-        // leaderboard.classList.remove('row')
-        // hideElement(leaderboard) 
-        // showElement(login)
     } else if (navSelect === 'leaderboard-nav') {
-        hideElement(welcome)
-        hideElement(login)
-        hideElement(rules)
-        fetchLeaderBoard()
-        showElement(leaderboard)
+        leaderboardHide(event)
     } else if (navSelect === 'rules-nav') {
-        hideElement(welcome)
-        hideElement(login)
-        leaderboard.classList.remove('row')
-        hideElement(leaderboard)
-        showElement(rules)
+        rulesHide(event)
     }
 }
 
-
-//add eventlistener to the 'how to play div'
-playDiv.addEventListener('click', function () {
-    let clickPlay = document.getElementById('play-div')
-    clickPlay.classList.add('hide')
-    showElement(game)
-    setTimer()
-})
-
-let possibilites = []
-
-//runs when user submits a word
-inputForm.addEventListener('submit', submitWord)
-
-
-// startGameBtn.addEventListener('click', startGame)
-
-loginForm.addEventListener('submit', userLogin)
-
-// starts the game and when the game is running the login button is disabled
-function startGame(level) {
-    fetch(`http://localhost:3000/games/${level}`)
-        .then(function (response) {
-            return response.json()
-        })
-        .then(function (json) {
-            console.log(json);
-            letters.innerText = ""
-            currentScore = 0
-            score.innerText = currentScore
-            json.letters.forEach(letter => {
-                showLetters(letter)
-            })
-            possibilities = json.possibilities
-            wordList.innerHTML = ''
-            showElement(playDiv)
-            hideElement(welcome)
-            fetchLeaderBoard()
-            returnScore.innerText = "Your Score was"
-        })
+// hiding login/welcome when navbar options are clicked
+function loginWelcomeHide(event) {
+    hideElement(welcome)
+    hideElement(login)
 }
 
+// what happens to other page elements when leaderboard is clicked
+function leaderboardHide(event) {
+    loginWelcomeHide()
+    hideElement(rules)
+    fetchLeaderBoard()
+    showElement(leaderboard)
+}
 
+// what happens to other page elements when rules is clicked
+function rulesHide(event) {
+    loginWelcomeHide()
+    leaderboard.classList.remove('row')
+    hideElement(leaderboard)
+    showElement(rules)
+}
+
+// lets user log in
+loginForm.addEventListener('submit', userLogin)
+
+// logs user in
 function userLogin(event) {
     event.preventDefault()
     let userInput = document.querySelector('#login-input').value;
-    console.log(userInput)
     fetch(`http://localhost:3000/users`, {
             method: `POST`,
             headers: {
@@ -146,35 +103,37 @@ function userLogin(event) {
             body: JSON.stringify({
                 username: userInput
             })
-        }).then(res => res.json())
-        .then(res => {
-            // hide:login, welcome
-            // show:welcome, level
-            userID = res.id;
-            let element = document.getElementById('login')
-            hideElement(element)
-            let next = document.getElementById('welcome')
-            showElement(next)
-            let addName = document.querySelector('#welcome h2')
-            addName.innerHTML = `<h2>Welcome to Wordle, ${res.username.charAt(0).toUpperCase()}${res.username.slice(1)}!</h2>`;
-            let level = document.getElementById('level-group')
-            showElement(level)
-            let welcome = document.getElementById('intro')
-            hideElement(welcome)
-            addNavListeners(res)
-        })
+        }).then(res => 
+            res.json()
+        ).then(setWelcomePage)
         .then(addLevelSelectListener(event))
 }
 
+// sets welcome page
+function setWelcomePage(res) {
+    userID = res.id;
+    let element = document.getElementById('login')
+    hideElement(element)
+    let next = document.getElementById('welcome')
+    showElement(next)
+    let addName = document.querySelector('#welcome h2')
+    addName.innerHTML = `<h2>Welcome to Wordle, ${res.username.charAt(0).toUpperCase()}${res.username.slice(1)}!</h2>`;
+    let level = document.getElementById('level-group')
+    showElement(level)
+    let welcome = document.getElementById('intro')
+    hideElement(welcome)
+    addNavListeners(res)
+}
+
+// click to choose level
 function addLevelSelectListener(event) {
-    // debugger
     levelSelect.addEventListener('click', chooseLevel)
 }
 
+// what happens when level is chosen
 function chooseLevel(event) {
     const level = event.target.id
     hideElement(levelSelect)
-    // debugger
     if (level === 'easy') {
         startGame(level)
     } else if (level === 'medium') {
@@ -184,65 +143,53 @@ function chooseLevel(event) {
     }
 }
 
-let usedWords = []
+// click play to start game
+playDiv.addEventListener('click', function () {
+    clickPlay.classList.add('hide')
+    showElement(game)
+    setTimer()
+})
 
-function submitWord(event) {
-    event.preventDefault()
-    let enteredWord = event.target.firstElementChild.value
-    let submittedWord = enteredWord.trim()
-    // debugger
-    if (possibilities.includes(submittedWord) && !usedWords.includes(submittedWord)) {
-        usedWords.push(submittedWord)
-        gameInput.value = ''
-        currentScore += submittedWord.length
-        score.innerText = currentScore
-        gameInput.style.borderColor = 'lightskyblue';
-        gameInput.style.boxShadow = '0 0 5px lightskyblue'
-
-        console.log(currentScore)
-        addWordToWordList(submittedWord)
-        gameInput.classList.remove('input-shake')
-    } else {
-        gameInput.classList.add('input-shake')
-        gameInput.value = '';
-        gameInput.style.borderColor = 'red';
-        gameInput.style.boxShadow = '0 0 5px red'
-        gameInput.placeholder = "Invalid word";
-    }
+// starts the game and when the game is running the login button is disabled
+function startGame(level) {
+    fetch(`http://localhost:3000/games/${level}`)
+        .then(function (response) {
+            return response.json()
+        })
+        .then(runGame)
 }
 
-function addWordToWordList(submittedWord) {
-    let newWord = document.createElement('li')
-    newWord.innerText = submittedWord
-    wordList.appendChild(newWord);
-
+// runs game
+function runGame(json) {
+    letters.innerText = ""
+    currentScore = 0
+    score.innerText = currentScore
+    json.letters.forEach(letter => {
+        showLetters(letter)
+    })
+    possibilities = json.possibilities
+    wordList.innerHTML = ''
+    showElement(playDiv)
+    hideElement(welcome)
+    fetchLeaderBoard()
+    returnScore.innerText = "Your Score was"
 }
 
-// Hide element
-function hideElement(element) {
-    element.classList.add('hide')
+// shows letters when level is selected
+function showLetters(letter) {
+    let letterBox = document.createElement('div')
+    letters.appendChild(letterBox)
+    letterBox.innerHTML += `<div class='letter-box' style='margin:.3em'>${letter.toUpperCase()}</div>`
 }
 
-// Show element
-function showElement(next) {
-    next.classList.remove('hide')
-}
-
+// sets game timer
 function setTimer() {
-    // Set the date we're counting down to
     var countDownDate = new Date().getTime() + 59000;
-    // Update the count down every 1 second
     var x = setInterval(function () {
-        // Get today's date and time
         var now = new Date().getTime();
-        // Find the distance between now and the count down date
         var distance = countDownDate - now;
-        // Time calculations for days, hours, minutes and seconds
-        //  var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
         var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-        // Output the result in an element with id="demo"
         timer.innerHTML = seconds;
-        // If the count down is over, write some text
         if (distance < 0) {
             clearInterval(x);
             document.getElementById("timer").innerHTML = "Times Up!";
@@ -257,41 +204,76 @@ function setTimer() {
                     })
                 })
                 .then(res => res.json())
-                .then(res => console.log(res))
             timeUp()
         }
     }, 1000);
 }
 
+// grabs submitted word from user
+inputForm.addEventListener('submit', submitWord)
+
+// word submitted during game
+function submitWord(event) {
+    event.preventDefault()
+    let enteredWord = event.target.firstElementChild.value
+    let submittedWord = enteredWord.trim()
+    if (possibilities.includes(submittedWord) && !usedWords.includes(submittedWord)) {
+        usedWords.push(submittedWord)
+        gameInput.value = ''
+        currentScore += submittedWord.length
+        score.innerText = currentScore
+        gameInput.style.borderColor = 'lightskyblue';
+        gameInput.style.boxShadow = '0 0 5px lightskyblue'
+        addWordToWordList(submittedWord)
+        gameInput.classList.remove('input-shake')
+    } else {
+        gameInput.classList.add('input-shake')
+        gameInput.value = '';
+        gameInput.style.borderColor = 'red';
+        gameInput.style.boxShadow = '0 0 5px red'
+        gameInput.placeholder = "Invalid word";
+    }
+}
+
+// adds word to word list
+function addWordToWordList(submittedWord) {
+    let newWord = document.createElement('li')
+    newWord.innerText = submittedWord
+    wordList.appendChild(newWord);
+}
+
+// ends game
 function timeUp() {
-    // hide
     hideElement(game)
-    // show
-    showElement(gameOver)
     returnScore.innerText += " " + currentScore
     document.querySelector('#click-to-restart').addEventListener('click', function () {
         usedWords = []
         currentScore = 0
-        // fetchLeaderBoard()
-        // showElement(leaderboard)
         hideElement(gameOver)
         hideElement(game)
         showElement(levelSelect)
     })
 }
 
-function showLetters(letter) {
-    let letterBox = document.createElement('div')
-    letters.appendChild(letterBox)
-    letterBox.innerHTML += `<div class='letter-box' style='margin:.3em'>${letter.toUpperCase()}</div>`
-}
+// allows resetInner to work 
 gameInput.addEventListener('change', resetInner)
 
+// reset submit word form when game is going
 function resetInner() {
     if (gameInput.placeholder === "Invalid word") {
         gameInput.placeholder = "Enter your word here."
     }
 }
 
+// hide element
+function hideElement(element) {
+    element.classList.add('hide')
+}
 
+// show element
+function showElement(next) {
+    next.classList.remove('hide')
+}
+
+// makes particles work
 particlesJS("particles-js", {"particles":{"number":{"value":200,"density":{"enable":true,"value_area":800}},"color":{"value":"#ffffff"},"shape":{"type":"star","stroke":{"width":0,"color":"#000000"},"polygon":{"nb_sides":4},"image":{"src":"","width":100,"height":100}},"opacity":{"value":0.5,"random":false,"anim":{"enable":false,"speed":1,"opacity_min":0.1,"sync":false}},"size":{"value":3,"random":true,"anim":{"enable":false,"speed":40,"size_min":0.1,"sync":false}},"line_linked":{"enable":true,"distance":150,"color":"#ffffff","opacity":0.4,"width":1},"move":{"enable":true,"speed":6,"direction":"none","random":false,"straight":false,"out_mode":"out","bounce":false,"attract":{"enable":false,"rotateX":600,"rotateY":1200}}},"interactivity":{"detect_on":"canvas","events":{"onhover":{"enable":true,"mode":"repulse"},"onclick":{"enable":true,"mode":"push"},"resize":true},"modes":{"grab":{"distance":400,"line_linked":{"opacity":1}},"bubble":{"distance":400,"size":40,"duration":2,"opacity":8,"speed":3},"repulse":{"distance":200,"duration":0.4},"push":{"particles_nb":4},"remove":{"particles_nb":2}}},"retina_detect":true});var count_particles, stats, update; stats = new Stats; stats.setMode(0); stats.domElement.style.position = 'absolute'; stats.domElement.style.left = '0px'; stats.domElement.style.top = '0px'; document.body.appendChild(stats.domElement); count_particles = document.querySelector('.js-count-particles'); update = function() { stats.begin(); stats.end(); if (window.pJSDom[0].pJS.particles && window.pJSDom[0].pJS.particles.array) { count_particles.innerText = window.pJSDom[0].pJS.particles.array.length; } requestAnimationFrame(update); }; requestAnimationFrame(update);;
