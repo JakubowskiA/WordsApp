@@ -19,12 +19,12 @@ let leaders = {}
 
 
 // fetch the leaderboard
-function fetchLeaderBoard(){
+function fetchLeaderBoard() {
     fetch(`http://localhost:3000/users`)
-    .then(res => res.json())
-    .then(res => {
-        createLeaderboard(res)
-    })
+        .then(res => res.json())
+        .then(res => {
+            createLeaderboard(res)
+        })
 }
 
 
@@ -37,8 +37,8 @@ function createLeaderboard(res) {
     let tableBody = document.querySelector('#table-body');
     tableBody.innerHTML = ""
     let iterator = 0
-    res.forEach(user =>{
-        let line = document.createElement('tr') 
+    res.forEach(user => {
+        let line = document.createElement('tr')
         line.innerHTML = `<th scope="row">${++iterator}</th>
                             <td>${user.username.charAt(0).toUpperCase() + user.username.slice(1)}</td>
                             <td>${user.highscore}</td>
@@ -48,7 +48,7 @@ function createLeaderboard(res) {
 }
 
 //add event listeners to the nav-bar
-function addNavListeners(res){
+function addNavListeners(res) {
     navBar.addEventListener('click', chooseNav)
 }
 
@@ -58,7 +58,7 @@ function addNavListeners(res){
 function chooseNav(event) {
     let nameAdd = document.querySelector('#welcome h2')
     const navSelect = event.target.id
-       if (navSelect === 'login-nav') {
+    if (navSelect === 'login-nav') {
         // //hides the game over div which shows the user score in left div
         // hideElement(gameOver)
         // //hides welcome message on the right
@@ -68,33 +68,31 @@ function chooseNav(event) {
         //     showElement(levelSelect)
         //     document.getElementById('submit').disabled = false;
         // }else{
-            
+
         // }
         location.reload();
         // hideElement(rules)  
         // leaderboard.classList.remove('row')
         // hideElement(leaderboard) 
         // showElement(login)
-       }
-       else if (navSelect === 'leaderboard-nav'){
-        hideElement(welcome) 
-        hideElement(login)  
+    } else if (navSelect === 'leaderboard-nav') {
+        hideElement(welcome)
+        hideElement(login)
         hideElement(rules)
         fetchLeaderBoard()
         showElement(leaderboard)
-       }
-       else if (navSelect === 'rules-nav'){
-        hideElement(welcome) 
-        hideElement(login)  
+    } else if (navSelect === 'rules-nav') {
+        hideElement(welcome)
+        hideElement(login)
         leaderboard.classList.remove('row')
-        hideElement(leaderboard) 
+        hideElement(leaderboard)
         showElement(rules)
-       }
+    }
 }
 
 
 //add eventlistener to the 'how to play div'
-playDiv.addEventListener('click', function(){
+playDiv.addEventListener('click', function () {
     let clickPlay = document.getElementById('play-div')
     clickPlay.classList.add('hide')
     showElement(game)
@@ -112,90 +110,88 @@ inputForm.addEventListener('submit', submitWord)
 loginForm.addEventListener('submit', userLogin)
 
 // starts the game and when the game is running the login button is disabled
-function startGame(level){
+function startGame(level) {
     fetch(`http://localhost:3000/games/${level}`)
-    .then(function(response){
-        return response.json()
-    })
-    .then(function(json){
-        console.log(json);
-        letters.innerText = ""
-        currentScore = 0
-        score.innerText = currentScore
-        json.letters.forEach(letter =>{
-            showLetters(letter)
+        .then(function (response) {
+            return response.json()
         })
-        possibilities = json.possibilities
-        wordList.innerHTML = ''
-        showElement(playDiv)
-        hideElement(welcome)
-        fetchLeaderBoard()
-        returnScore.innerText = "Your Score was"
-    })
+        .then(function (json) {
+            console.log(json);
+            letters.innerText = ""
+            currentScore = 0
+            score.innerText = currentScore
+            json.letters.forEach(letter => {
+                showLetters(letter)
+            })
+            possibilities = json.possibilities
+            wordList.innerHTML = ''
+            showElement(playDiv)
+            hideElement(welcome)
+            fetchLeaderBoard()
+            returnScore.innerText = "Your Score was"
+        })
 }
 
 
-function userLogin(event){
-   event.preventDefault()
+function userLogin(event) {
+    event.preventDefault()
     let userInput = document.querySelector('#login-input').value;
-   console.log(userInput)
+    console.log(userInput)
     fetch(`http://localhost:3000/users`, {
-        method: `POST`,
-        headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-        },
-        body: JSON.stringify({
-            username: userInput
+            method: `POST`,
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify({
+                username: userInput
+            })
+        }).then(res => res.json())
+        .then(res => {
+            // hide:login, welcome
+            // show:welcome, level
+            userID = res.id;
+            let element = document.getElementById('login')
+            hideElement(element)
+            let next = document.getElementById('welcome')
+            showElement(next)
+            let addName = document.querySelector('#welcome h2')
+            addName.innerHTML = `<h2>Welcome to Wordle, ${res.username.charAt(0).toUpperCase()}${res.username.slice(1)}!</h2>`;
+            debugger
+            let level = document.getElementById('level-group')
+            showElement(level)
+            let welcome = document.getElementById('intro')
+            hideElement(welcome)
+            addNavListeners(res)
         })
-    }).then(res => res.json())
-    .then(res => {
-        // hide:login, welcome
-        // show:welcome, level
-        userID = res.id;
-        let element = document.getElementById('login')
-        hideElement(element)
-        let next= document.getElementById('welcome')
-        showElement(next)
-        let addName = document.querySelector('#welcome h2')
-        addName.innerHTML = `<h2>Welcome to Wordle, ${res.username.charAt(0).toUpperCase()}${res.username.slice(1)}!</h2>`;
-        debugger
-        let level = document.getElementById('level-group')
-        showElement(level)
-        let welcome = document.getElementById('intro')
-        hideElement(welcome)
-        addNavListeners(res)
-    })
-    .then(addLevelSelectListener(event))
+        .then(addLevelSelectListener(event))
 }
 
-function addLevelSelectListener(event){
+function addLevelSelectListener(event) {
     // debugger
     levelSelect.addEventListener('click', chooseLevel)
 }
 
-function chooseLevel(event){
-   const level = event.target.id
-   hideElement(levelSelect)
+function chooseLevel(event) {
+    const level = event.target.id
+    hideElement(levelSelect)
     // debugger
-   if (level === 'easy') {
+    if (level === 'easy') {
         startGame(level)
-   }
-   else if (level === 'medium'){
+    } else if (level === 'medium') {
         startGame(level)
-   }
-   else if (level === 'hard'){
+    } else if (level === 'hard') {
         startGame(level)
-   }
+    }
 }
 
 let usedWords = []
 
-function submitWord(event){
+function submitWord(event) {
     event.preventDefault()
     let submittedWord = event.target.firstElementChild.value
     // debugger
-    if (possibilities.includes(submittedWord) && !usedWords.includes(submittedWord)){
+    if (possibilities.includes(submittedWord) && !usedWords.includes(submittedWord)) {
         usedWords.push(submittedWord)
         gameInput.value = ''
         currentScore += submittedWord.length
@@ -206,8 +202,7 @@ function submitWord(event){
         console.log(currentScore)
         addWordToWordList(submittedWord)
         gameInput.classList.remove('input-shake')
-    }
-    else {
+    } else {
         gameInput.classList.add('input-shake')
         gameInput.value = '';
         gameInput.style.borderColor = 'red';
@@ -220,24 +215,24 @@ function addWordToWordList(submittedWord) {
     let newWord = document.createElement('li')
     newWord.innerText = submittedWord
     wordList.appendChild(newWord);
- 
+
 }
 
 // Hide element
-function hideElement(element){
+function hideElement(element) {
     element.classList.add('hide')
 }
 
 // Show element
-function showElement(next){
+function showElement(next) {
     next.classList.remove('hide')
 }
 
-function setTimer(){
+function setTimer() {
     // Set the date we're counting down to
     var countDownDate = new Date().getTime() + 59000;
     // Update the count down every 1 second
-    var x = setInterval(function() {
+    var x = setInterval(function () {
         // Get today's date and time
         var now = new Date().getTime();
         // Find the distance between now and the count down date
@@ -251,38 +246,38 @@ function setTimer(){
         if (distance < 0) {
             clearInterval(x);
             document.getElementById("timer").innerHTML = "Times Up!";
-            fetch(`http://localhost:3000/users/${userID}`,{
-                method: 'PATCH',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json'
-                },
-                body: JSON.stringify({
-                    highscore: currentScore
-                })   
-            })
-            .then(res => res.json())
-            .then(res => console.log(res))
+            fetch(`http://localhost:3000/users/${userID}`, {
+                    method: 'PATCH',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        highscore: currentScore
+                    })
+                })
+                .then(res => res.json())
+                .then(res => console.log(res))
             timeUp()
         }
     }, 1000);
 }
 
-function timeUp(){
+function timeUp() {
     // hide
     hideElement(game)
     // show
     showElement(gameOver)
     returnScore.innerText += " " + currentScore
-    document.querySelector('#click-to-restart').addEventListener('click', function(){
-        usedWords=[]
+    document.querySelector('#click-to-restart').addEventListener('click', function () {
+        usedWords = []
         currentScore = 0
         // fetchLeaderBoard()
         // showElement(leaderboard)
         hideElement(gameOver)
         hideElement(game)
         showElement(levelSelect)
-    }) 
+    })
 }
 
 function showLetters(letter) {
@@ -292,8 +287,11 @@ function showLetters(letter) {
 }
 gameInput.addEventListener('change', resetInner)
 
-function resetInner(){
-    if (gameInput.placeholder === "Invalid word"){
+function resetInner() {
+    if (gameInput.placeholder === "Invalid word") {
         gameInput.placeholder = "Enter your word here."
     }
 }
+
+
+particlesJS("particles-js", {"particles":{"number":{"value":200,"density":{"enable":true,"value_area":800}},"color":{"value":"#ffffff"},"shape":{"type":"star","stroke":{"width":0,"color":"#000000"},"polygon":{"nb_sides":4},"image":{"src":"","width":100,"height":100}},"opacity":{"value":0.5,"random":false,"anim":{"enable":false,"speed":1,"opacity_min":0.1,"sync":false}},"size":{"value":3,"random":true,"anim":{"enable":false,"speed":40,"size_min":0.1,"sync":false}},"line_linked":{"enable":true,"distance":150,"color":"#ffffff","opacity":0.4,"width":1},"move":{"enable":true,"speed":6,"direction":"none","random":false,"straight":false,"out_mode":"out","bounce":false,"attract":{"enable":false,"rotateX":600,"rotateY":1200}}},"interactivity":{"detect_on":"canvas","events":{"onhover":{"enable":true,"mode":"repulse"},"onclick":{"enable":true,"mode":"push"},"resize":true},"modes":{"grab":{"distance":400,"line_linked":{"opacity":1}},"bubble":{"distance":400,"size":40,"duration":2,"opacity":8,"speed":3},"repulse":{"distance":200,"duration":0.4},"push":{"particles_nb":4},"remove":{"particles_nb":2}}},"retina_detect":true});var count_particles, stats, update; stats = new Stats; stats.setMode(0); stats.domElement.style.position = 'absolute'; stats.domElement.style.left = '0px'; stats.domElement.style.top = '0px'; document.body.appendChild(stats.domElement); count_particles = document.querySelector('.js-count-particles'); update = function() { stats.begin(); stats.end(); if (window.pJSDom[0].pJS.particles && window.pJSDom[0].pJS.particles.array) { count_particles.innerText = window.pJSDom[0].pJS.particles.array.length; } requestAnimationFrame(update); }; requestAnimationFrame(update);;
