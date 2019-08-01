@@ -157,7 +157,6 @@ function userLogin(event) {
             showElement(next)
             let addName = document.querySelector('#welcome h2')
             addName.innerHTML = `<h2>Welcome to Wordle, ${res.username.charAt(0).toUpperCase()}${res.username.slice(1)}!</h2>`;
-            debugger
             let level = document.getElementById('level-group')
             showElement(level)
             let welcome = document.getElementById('intro')
@@ -189,7 +188,8 @@ let usedWords = []
 
 function submitWord(event) {
     event.preventDefault()
-    let submittedWord = event.target.firstElementChild.value
+    let enteredWord = event.target.firstElementChild.value
+    let submittedWord = enteredWord.trim()
     // debugger
     if (possibilities.includes(submittedWord) && !usedWords.includes(submittedWord)) {
         usedWords.push(submittedWord)
@@ -283,7 +283,7 @@ function timeUp() {
 function showLetters(letter) {
     let letterBox = document.createElement('div')
     letters.appendChild(letterBox)
-    letterBox.innerHTML += `<div class='letter-box'>${letter.toUpperCase()}</div>`
+    letterBox.innerHTML += `<div class='letter-box' style='margin:.3em'>${letter.toUpperCase()}</div>`
 }
 gameInput.addEventListener('change', resetInner)
 
