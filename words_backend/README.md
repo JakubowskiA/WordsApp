@@ -1,24 +1,21 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+#About 
 
-Things you may want to cover:
+Welcome to Wordle, a fun game that lets users practice their vocabulary and typing skills.
 
-* Ruby version
+#How to Play
 
-* System dependencies
+After logging in, users will select a level. When the game begins users will be given a collection of letters. The easy levels have 6 letters, the medium levels have 8 letters, and the hard levels have 10 letters. From these letters, users will have one minute to make as many words as they can.
 
-* Configuration
 
-* Database creation
+#Installation Instructions
 
-* Database initialization
+To use this program, go to your terminal and enter the following.
 
-* How to run the test suite
+bundle install 
+rails db:migrate 
+rails db:seed
 
-* Services (job queues, cache servers, search engines, etc.)
+Navigate to the frontend folder and enter "open index.html". This will open the program in your browser. Navigate to the words_backend folder and enter "rails s". 
 
-* Deployment instructions
-
-* ...
