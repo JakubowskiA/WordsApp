@@ -59,22 +59,7 @@ function chooseNav(event) {
     let nameAdd = document.querySelector('#welcome h2')
     const navSelect = event.target.id
     if (navSelect === 'login-nav') {
-        // //hides the game over div which shows the user score in left div
-        // hideElement(gameOver)
-        // //hides welcome message on the right
-        // hideElement(welcome) 
-
-        // if(document.querySelector('#timer').innerHTML == 'Times Up!'){
-        //     showElement(levelSelect)
-        //     document.getElementById('submit').disabled = false;
-        // }else{
-
-        // }
         location.reload();
-        // hideElement(rules)  
-        // leaderboard.classList.remove('row')
-        // hideElement(leaderboard) 
-        // showElement(login)
     } else if (navSelect === 'leaderboard-nav') {
         hideElement(welcome)
         hideElement(login)
@@ -148,8 +133,6 @@ function userLogin(event) {
             })
         }).then(res => res.json())
         .then(res => {
-            // hide:login, welcome
-            // show:welcome, level
             longestWord = res.longest_word;
             userID = res.id;
             let element = document.getElementById('login')
@@ -277,8 +260,6 @@ function timeUp() {
     document.querySelector('#click-to-restart').addEventListener('click', function () {
         usedWords = []
         currentScore = 0
-        // fetchLeaderBoard()
-        // showElement(leaderboard)
         hideElement(gameOver)
         hideElement(game)
         showElement(levelSelect)
